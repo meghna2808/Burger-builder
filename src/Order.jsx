@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { collection, getDocs, query, where } from "firebase/firestore";
+import { collection, getDocs, query, where,orderBy } from "firebase/firestore";
 import { db } from "./firebase";
 import { useAuth } from "./AuthContext"; // Assuming you have an AuthContext
 import './Order.css'
@@ -13,7 +13,7 @@ const Order = () => {
         const fetchOrders = async () => {
             if (!user) return;
             try {
-                const q = query(collection(db, "orders"), where("userId", "==", user.uid));
+                const q = query(collection(db, "orders"), where("userId", "==", user.uid),orderBy("createdAt", "desc") );
                 const querySnapshot = await getDocs(q);
                 const fetchedOrders = querySnapshot.docs.map((doc) => ({
                     id: doc.id,
@@ -40,18 +40,21 @@ const Order = () => {
     return (
         <div className="order-container">
             <h2>Your Orders</h2>
-            {orders.map((order) => (
-                <div key={order.id} className="orderCard">
-                    <h3>Order ID: {order.id}</h3>
-                    <p><strong>Total Price:</strong> ₹{order.totalPrice}</p>
-                    <h4>Ingredients:</h4>
-                    <ul>
-                        {Object.entries(order.ingredients || {}).map(([key, value]) => (
-                            <li key={key}>{key}: {value}</li>
-                        ))}
-                    </ul>
-                </div>
-            ))}
+            <div className="order-grid">
+                {orders.map((order) => (
+                    <div key={order.id} className="orderCard">
+                        <h3>Order ID: {order.id}</h3>
+                        <p><strong>Total Price:</strong> ₹{order.totalPrice}</p>
+                        <h4>Ingredients:</h4>
+                        <ul>
+                            {Object.entries(order.ingredients || {}).map(([key, value]) => (
+                                <li key={key}>{key}: {value}</li>
+                            ))}
+                        </ul>
+                        <p><strong>Order Date:</strong> {order.createdAt?.toDate().toLocaleString()}</p>
+                    </div>
+                ))}
+            </div>
         </div>
     );
 };

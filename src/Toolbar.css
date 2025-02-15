@@ -2,7 +2,7 @@
     position: fixed;
     top: 0;
     width: 100%;
-    background-color: #f4b46c;
+    background-color: #703B09;
     padding: 10px 20px;
     display: flex;
     justify-content: space-between;
@@ -21,7 +21,7 @@
 }
 
 .nav-link:hover {
-    color: #6d4c41;
+    color: black
 }
 
 .logout-btn {
@@ -34,5 +34,5 @@
 }
 
 .logout-btn:hover {
-    color: #6d4c41;
+    color: black
 }

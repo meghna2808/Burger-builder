@@ -47,7 +47,7 @@ const Burger = () => {
         const orderDetails = {
             userId: user.uid,
             ingredients: ingredients,
-            totalPrice: calculateTotalPrice(),
+            totalPrice: calculateTotalPrice(ingredients,ingredientPrices),
             createdAt: new Date()
         };
 
