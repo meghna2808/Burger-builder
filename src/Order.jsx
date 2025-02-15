@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { collection, getDocs, query, where,orderBy } from "firebase/firestore";
 import { db } from "./firebase";
-import { useAuth } from "./AuthContext"; // Assuming you have an AuthContext
+import { useAuth } from "./AuthContext"; 
 import './Order.css'
 const Order = () => {
-    const { user } = useAuth(); // Get logged-in user
+    const { user } = useAuth(); // getting user
     const [orders, setOrders] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -20,7 +20,7 @@ const Order = () => {
                     ...doc.data(),
                 }));
 
-                console.log("Fetched Orders:", fetchedOrders); // Debugging
+                console.log("Fetched Orders:", fetchedOrders); 
                 setOrders(fetchedOrders);
             } catch (err) {
                 console.error("Error fetching orders:", err);

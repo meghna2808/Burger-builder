@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { auth } from "./firebase"; // Import Firebase auth instance
+import { auth } from "./firebase"; 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import './Auth.css'
 const Auth = ({ onAuthSuccess }) => {
     const navigate = useNavigate();
 
-    // State for email, password, login/signup toggle, and error message
+    // State for email, password, login
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [isLogin, setIsLogin] = useState(true);
@@ -20,7 +20,7 @@ const Auth = ({ onAuthSuccess }) => {
                 await createUserWithEmailAndPassword(auth, email, password);
             }
             onAuthSuccess();
-            navigate("/order"); // Redirect to Burger page
+            navigate("/order"); // Redirect to orders page after successfully placing order
         } catch (err) {
             setError(err.message);
         }

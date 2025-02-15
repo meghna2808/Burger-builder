@@ -60,10 +60,10 @@
 }
 
 .ingredientsBlock {
-    background-color: #f4b46c; /* Ensure full background */
+    background-color: #f4b46c; 
     margin-top: 0px;
     margin: 10px auto 0;
-    display: block; /* Change from table to block */
+    display: block; 
     max-width: 200px;
     width: 100%;
     border-radius: 3px;

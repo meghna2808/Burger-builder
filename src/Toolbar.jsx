@@ -8,7 +8,7 @@ const Toolbar = () => {
     const navigate = useNavigate(); // Get authentication state
     const handleLogout = async () => {
         await logout(); // Logs out the user
-        navigate("/"); // Redirects to home page
+        navigate("/"); // to home page
     };
     return (
         <nav className="toolbar">
