@@ -2,9 +2,12 @@ import React from 'react'
 import './BurgerStyle.css'
 import { useState } from 'react'
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "./AuthContext";
+import { addDoc, collection } from "firebase/firestore";
+import { db } from "./firebase"; 
 const Burger = () => {
   const navigate = useNavigate();
-
+  const { user } = useAuth(); 
   const ingredientPrices = {
     lettuce: 10,
     cheese: 20,
@@ -25,7 +28,7 @@ const Burger = () => {
         });
     };
 
-    const calculateTotalPrice = (ingredients, ingredientPrices, basePrice = 50) => {
+    const calculateTotalPrice = (ingredients={}, ingredientPrices, basePrice = 50) => {
       return Object.keys(ingredients).reduce(
           (sum, ingredient) => sum + ingredients[ingredient] * ingredientPrices[ingredient],
           basePrice
@@ -33,7 +36,29 @@ const Burger = () => {
   };
   
   const totalPrice = calculateTotalPrice(ingredients, ingredientPrices);
-    
+  const placeOrder = async () => {
+    if (!user) {
+        alert("Please sign in to place an order.");
+        navigate("/auth");
+        return;
+    }
+
+    try {
+        const orderDetails = {
+            userId: user.uid,
+            ingredients: ingredients,
+            totalPrice: calculateTotalPrice(),
+            createdAt: new Date()
+        };
+
+        await addDoc(collection(db, "orders"), orderDetails);
+        console.log("Order placed:", orderDetails);
+
+        navigate("/order"); // Redirect to order history page
+    } catch (error) {
+        console.error("Error placing order:", error);
+    }
+};
     
     const burgerContent=()=>{
         let burger=[];
@@ -62,7 +87,7 @@ const Burger = () => {
             </div>
         </div>
           ))}
-          <button className='signUp'onClick={() => navigate("/auth")}>SIGN UP TO ORDER</button>
+          <button className='signUp'onClick={placeOrder}>Place order </button>
         </div>
         </div>
     </div>

@@ -9,6 +9,7 @@ html, body {
   overflow-x: hidden; 
 }
 .burgerContent {
+  margin-top: 80px;
   display: flex;
   justify-content: center;  /* Centers horizontally */
   align-items: center;      /* Centers vertically */

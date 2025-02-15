@@ -6,21 +6,25 @@ import React from 'react'
 import Auth from './Auth'
 import Order from './Order'
 import { useState } from 'react';
-
+import Toolbar from './Toolbar';
+import { AuthProvider } from "./AuthContext"; 
 const App = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   return (
+    <AuthProvider>
     <Router>
     <div className="burgerContent">
-      
+    <Toolbar></Toolbar>
             <Routes>
+              
                 <Route path="/" element={<Burger />} />
                 <Route path="/auth" element={<Auth onAuthSuccess={() => setIsAuthenticated(true)} />} /> 
-                 {/* <Route path="/order" element={isAuthenticated ? <Order /> : <Navigate to="/auth" />} /> */}
+                 <Route path="/order" element={isAuthenticated ? <Order /> : <Navigate to="/auth" />} />
             </Routes>
         
     </div>
     </Router>
+    </AuthProvider>
   )
 }
 
